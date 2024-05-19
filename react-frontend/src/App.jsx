@@ -14,7 +14,7 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://localhost:8080/v1/graphic");
+      const response = await fetch("http://localhost:1323/api/items");
       if (!response.ok) {
         throw new Error("Something went wrong!");
       }

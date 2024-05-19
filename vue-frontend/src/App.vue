@@ -14,21 +14,21 @@
     <div v-else>
       <GraphicList :graphic="graphic" />
     </div>
-    <ShapeList :graphic="graphic" />
+    <!-- <ShapeList :graphic="graphic" /> -->
   </div>
 </template>
 
 <script>
 import GraphicList from "./components/GraphicList.vue";
 import AddGraphic from "./components/AddGraphic.vue";
-import ShapeList from "./components/ShapeList.vue";
+// import ShapeList from "./components/ShapeList.vue";
 import DeleteGraphic from "./components/DeleteGraphic.vue";
 
 export default {
   components: {
     GraphicList,
     AddGraphic,
-    ShapeList,
+    // ShapeList,
     DeleteGraphic,
   },
   data() {
@@ -43,11 +43,13 @@ export default {
       this.isLoading = true;
       this.error = null;
       try {
-        const response = await fetch("http://localhost:8080/v1/graphic");
+        const response = await fetch("http://localhost:1323/api/items");
+        // const response = await fetch("http://localhost:8080/v1/graphic");
         if (!response.ok) {
           throw new Error("Something went wrong!");
         }
         const data = await response.json();
+        console.log(data);
         this.graphic = Object.values(data).map(item => ({
           key: item.id,
           num: item.num,
