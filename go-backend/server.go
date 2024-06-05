@@ -1,11 +1,9 @@
 package main
 
 import (
-	"math/rand"
 	"net/http"
 	"os"
 	"path/filepath"
-	"strconv"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -27,45 +25,6 @@ type Item struct {
 	FontWeight   int       `json:"font_weight"`
 	Note         string    `json:"note"`
 	CreatedAt    time.Time `json:"created_at"`
-}
-
-func GraphicController(c echo.Context) error {
-	for i := 0; i < 10000; i++ {
-		numRandom := rand.Intn(11) + 1
-		layerRandom := rand.Intn(101)
-		heightRandom := rand.Intn(290) + 10
-		widthRandom := rand.Intn(290) + 10
-		XAxisRandom := rand.Intn(98) + 1
-		YAxisRandom := rand.Intn(98) + 1
-		BorderWeightRandom := rand.Intn(20) + 1
-		BorderColorR := rand.Intn(256)
-		BorderColorG := rand.Intn(256)
-		BorderColorB := rand.Intn(256)
-		BorderColorRandom := []string{strconv.Itoa(BorderColorR), strconv.Itoa(BorderColorG), strconv.Itoa(BorderColorB)}
-		BorderRadiusRandom := rand.Intn(101)
-		FontSizeRandom := rand.Intn(2) + 40
-		fontWeight := []string{"100", "200", "300", "400", "500", "600", "700", "800", "900"}
-		FontWeightRandom := rand.Intn(len(fontWeight))
-		graphic := models.Graphic{
-			Num:          strconv.Itoa(numRandom),
-			Layer:        strconv.Itoa(layerRandom),
-			Height:       strconv.Itoa(heightRandom),
-			Width:        strconv.Itoa(widthRandom),
-			XAxis:        strconv.Itoa(XAxisRandom),
-			YAxis:        strconv.Itoa(YAxisRandom),
-			BorderWeight: strconv.Itoa(BorderWeightRandom),
-			BorderColor:  BorderColorRandom,
-			BorderRadius: strconv.Itoa(BorderRadiusRandom),
-			FontSize:     strconv.Itoa(FontSizeRandom),
-			FontWeight:   fontWeight[FontWeightRandom],
-		}
-		initializers.AddToDB(graphic)
-	}
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status":  "success",
-		"message": "Created",
-	})
 }
 
 func main() {
@@ -169,8 +128,6 @@ func main() {
 		// ส่งข้อมูล item กลับไปให้ client ในรูปแบบ JSON
 		return c.JSON(http.StatusOK, items)
 	})
-
-	e.GET("api/graphic", GraphicController)
 
 	e.Logger.Fatal(e.Start(":1323"))
 
