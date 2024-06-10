@@ -1,0 +1,23 @@
+# Pull the base image
+FROM node:20-alpine3.19
+
+# Set the working directory
+WORKDIR /usr/app
+
+# Copy app dependencies to container
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Upgrade npm to the latest version (optional)
+RUN npm install -g npm@latest
+
+# Copy code from host to container
+COPY . .
+
+# Expose Port
+EXPOSE 5173
+
+# Deploy app for local development
+CMD ["npm", "run", "dev", "--", "--host"]
